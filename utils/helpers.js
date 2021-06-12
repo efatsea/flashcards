@@ -34,7 +34,7 @@ export function setData (data) {
         }
         console.log( "done")
     }).catch((err)=> {
-        console.log("error is ", + err)
+        console.log("error was ", + err)
     })
 }
 
@@ -42,9 +42,9 @@ export function fetchDecks(results) {
     try {
         const data = AsyncStorage.getItem(DECKS_STORAGE_KEY)
         if (data !== null) {
-            
+            console.log(JSON.parse(data))
         }
     } catch (error) {
-        console.log("error is ", + err)
+        console.log("error is ", + error)
     }
 }

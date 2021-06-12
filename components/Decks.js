@@ -8,8 +8,9 @@ class Decks extends Component {
         return(
             <View>
                 <Text>Decks</Text>
-                {setData(initData)}
-                {fetchDecks()}
+                {setData(initData)
+                }
+                
 
             </View>
         )
