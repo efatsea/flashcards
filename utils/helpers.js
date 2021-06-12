@@ -38,9 +38,9 @@ export function setData (data) {
     })
 }
 
-export function fetchDecks(results) {
+export const fetchDecks = async() => {
     try {
-        const data = AsyncStorage.getItem(DECKS_STORAGE_KEY)
+        const data = await AsyncStorage.getItem(DECKS_STORAGE_KEY)
         if (data !== null) {
             console.log(JSON.parse(data))
         }
