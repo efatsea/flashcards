@@ -5,7 +5,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import { FontAwesome, Ionicons } from "@expo/vector-icons"
-import { blue, white } from './components/utils/colors';
+import { blue, white } from './utils/colors';
 import Decks from "./components/Decks"
 import Add from "./components/Add"
 
