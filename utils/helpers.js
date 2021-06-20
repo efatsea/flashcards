@@ -36,15 +36,16 @@ export function setData (data) {
     }).catch((err)=> {
         console.log("error was ", + err)
     })
+    console.log("done yo")
 }
 
 export const fetchDecks = async() => {
     try {
         const data = await AsyncStorage.getItem(DECKS_STORAGE_KEY)
         if (data !== null) {
-            console.log(JSON.parse(data))
-            const results = JSON.parce(data)
+            const results = JSON.parse(data)
             return  results
+            
         }
     } catch (error) {
         console.log("error is ", + error)

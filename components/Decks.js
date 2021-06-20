@@ -4,37 +4,40 @@ import { fetchDecks, setData, initData } from "../utils/helpers"
 
 class Decks extends Component {
     state = {
-        object: null
+        decker: null
     }
     componentDidMount () {
-        if (this.state.object === null) {
+        
+        if (this.state.object = null) {
             setData(initData)
-                .then (() => {
-                    const obj =fetchDecks()
+                .then ((res) => {
+                    fetchDecks()
                         .then((obj) => {
                             this.setState(() => {
-                                object: obj
+                                decker:obj  
                             })
                         })
                 })
         }
         else {
-            const obj = fetchDecks()
+            fetchDecks()
                 .then((obj) => {
                     this.setState(() => {
-                        object: obj
+                        decker:obj
                     })
                 })
         }
-        console.log(this.state.object)
+        
     }
+
     render(){
-        const { object } = this.state
-        console.log( object )
+        const { decker } = this.state
+        console.log("text")
+        console.log( decker )
         return(
             <View>
                 <Text>Decks</Text>
-                {object}
+                {decker}
             </View>
         )
     }
