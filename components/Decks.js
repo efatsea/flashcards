@@ -7,30 +7,33 @@ class Decks extends Component {
         decker: null
     }
     componentDidMount () {
-        
-        if (this.state.object = null) {
+        if (this.state.object === null) {
             setData(initData)
-                .then ((res) => {
+                .then((res) => {
                     fetchDecks()
                         .then((obj) => {
                             this.setState(() => {
-                                decker:obj  
+                                decker: obj
                             })
+                            
                         })
                 })
         }
         else {
             fetchDecks()
-                .then((obj) => {
+                .then((decker) => {
                     this.setState(() => {
-                        decker:obj
+                        decker
                     })
+                    console.log(decker)
                 })
         }
+        
         
     }
 
     render(){
+        
         const { decker } = this.state
         console.log("text")
         console.log( decker )
