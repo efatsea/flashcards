@@ -12,20 +12,14 @@ class Decks extends Component {
                 .then((res) => {
                     fetchDecks()
                         .then((obj) => {
-                            this.setState(() => {
-                                decker: obj
-                            })
-                            
+                            this.setState({decker:Object.keys(obj)})
                         })
                 })
         }
         else {
             fetchDecks()
                 .then((decker) => {
-                    this.setState(() => {
-                        decker
-                    })
-                    console.log(decker)
+                    this.setState({decker:Object.keys(decker)})
                 })
         }
         
@@ -35,12 +29,19 @@ class Decks extends Component {
     render(){
         
         const { decker } = this.state
-        console.log("text")
-        console.log( decker )
+        console.log(decker)
         return(
             <View>
                 <Text>Decks</Text>
-                {decker}
+                {decker !== null 
+                    ? decker.map((item) => {
+                        return (
+                            <Text key={item}>{item}</Text>
+                        )
+                      })
+                    :  null
+                }
+                
             </View>
         )
     }

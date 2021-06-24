@@ -32,11 +32,9 @@ export function setData (data) {
             console.log("er")
             throw err
         }
-        console.log( "done")
     }).catch((err)=> {
         console.log("error was ", + err)
     })
-    console.log("done yo")
 }
 
 export const fetchDecks = async() => {
