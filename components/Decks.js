@@ -37,7 +37,7 @@ class Decks extends Component {
         return(
             <View style={styles.container}>
                 <Text>Decks</Text>
-                {decksName !== null 
+                {decks !== null 
                     ? decksName.map((item) => {
                         return (
                             <TouchableOpacity key={item.length} style={styles.decksButton}>
@@ -46,8 +46,8 @@ class Decks extends Component {
                             </TouchableOpacity>
                             
                         )
-                      })
-                    :  null
+                    })
+                    :  <Text>Wait...</Text>
                 }
                 
             </View>

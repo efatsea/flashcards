@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from "react-native"
 import { background, grey, red } from "../utils/colors"
-import { setData } from "../utils/helpers"
+import { submitDeck } from "../utils/helpers"
 
 class Add extends Component {
     state = {
@@ -17,16 +17,13 @@ class Add extends Component {
         const { title } = this.state
         console.log(title)
         console.log("1")
-        setData(title)
-        this.setState({ title: "" })
+        submitDeck(title)
+        this.setState({ title: " " })
         console.log("3")
-           
-        
-
     }
 
     render() {
-        const { text } = this.state
+        const { title } = this.state
         return (
             <View style={styles.container}>
                 <Text>Add New Deck</Text>
@@ -34,7 +31,7 @@ class Add extends Component {
                 <TextInput
                     placeholder = "Title"
                     onChangeText = {text => this.setText(text)}
-                    defaultValue={text}
+                    defaultValue={title}
                 />
                 <TouchableOpacity onPress={this.onClick.bind()}>
                     <Text>Add Deck</Text>

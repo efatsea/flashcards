@@ -37,6 +37,15 @@ export function setData (data) {
     })
 }
 
+export function submitDeck (data) {
+    return AsyncStorage.mergeItem(DECKS_STORAGE_KEY, JSON.stringify({
+        [data] : {
+            "questions":[],
+            "title": data ,
+        }
+    }))
+}
+
 export const fetchDecks = async() => {
     try {
         const data = await AsyncStorage.getItem(DECKS_STORAGE_KEY)
