@@ -27,22 +27,22 @@ class Decks extends Component {
                 })
         }
         
-        
     }
+    
 
     render(){
         
         const { decksName, decks } = this.state
-        console.log(decks)
+        console.log(decksName)
         return(
             <View style={styles.container}>
                 <Text>Decks</Text>
-                {decks !== null 
+                {decksName !== null 
                     ? decksName.map((item) => {
                         return (
-                            <TouchableOpacity key={item.length} style={styles.decksButton}>
+                            <TouchableOpacity key={item.length+item} style={styles.decksButton}>
                                 <Text key={item}>{item}</Text>
-                                <Text key={item.length}>{decks[item].questions.length} cards</Text>
+                                <Text key={item.length+item}>{decks[item].questions.length} cards</Text>
                             </TouchableOpacity>
                             
                         )
