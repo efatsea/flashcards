@@ -12,15 +12,14 @@ class Add extends Component {
         this.setState({title: text})
     }
 
-    onClick = () => {
-        console.log("start")
+    onClick = ({navigation}) => {
         const { title } = this.state
         console.log(title)
-        console.log("1")
         submitDeck(title)
         this.setState({ title: " " })
-        console.log("3")
+        this.props.navigation.navigate("Decks") 
     }
+
 
     render() {
         const { title } = this.state
