@@ -11,6 +11,11 @@ class Decks extends Component {
         decks: null,
         decksName: null
     }
+
+    onPress = () => {
+        this.props.navigation.navigate("DeckView")
+    }
+
     componentDidMount () {
         
         if (this.state.object === null) {
@@ -18,38 +23,30 @@ class Decks extends Component {
                 .then((res) => {
                     fetchDecks()
                         .then((obj) => {
-                            
                                 this.setState({ decks: obj })
                                 this.setState({ decksName: Object.keys(obj) })
-                            
                         })
                 })
         }
         else {
             fetchDecks()
                 .then((obj) => {
-                    
                         this.setState({ decks: obj })
                         this.setState({ decksName: Object.keys(obj) })
-                    
                 })
         }
         this._unsubscribe = this.props.navigation.addListener("tabPress", () => {
             fetchDecks()
                 .then((obj) => {
-                    
                         this.setState({ decks: obj })
                         this.setState({ decksName: Object.keys(obj) })
-                    
                 })
         })
         this._unsubscribe = this.props.navigation.addListener("focus", () => {
             fetchDecks()
                 .then((obj) => {
-
                     this.setState({ decks: obj })
                     this.setState({ decksName: Object.keys(obj) })
-
                 })
         })
     }
@@ -67,7 +64,7 @@ class Decks extends Component {
                 {decksName !== null 
                     ? decksName.map((item) => {
                         return (
-                            <TouchableOpacity key={item.length+item} style={styles.decksButton}>
+                            <TouchableOpacity key={item.length+item} onPress ={ this.onPress.bind()}  style={styles.decksButton}>
                                 <Text key={item}>{item}</Text>
                                 <Text key={item.length+item}>{decks[item].questions.length} cards</Text>
                             </TouchableOpacity>

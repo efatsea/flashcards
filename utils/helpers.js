@@ -37,6 +37,15 @@ export function setData (data) {
     })
 }
 
+export const deleteDeck = async(data) => {
+    try {
+        await AsyncStorage.removeItem(data)
+    }
+    catch( error) {
+        console.log("error is", + error)
+    }
+}
+
 export function submitDeck (data) {
     return AsyncStorage.mergeItem(DECKS_STORAGE_KEY, JSON.stringify({
         [data] : {
