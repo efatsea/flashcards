@@ -5,8 +5,9 @@ import { deleteDeck } from "../utils/helpers"
 
 class DeckView extends Component {
     
-    onDelete = ({ navigation }) => {
-        
+    onDelete = ({  route, navigation }) => {
+        const { title, decks } = this.props.route.params
+        console.log(title)
         deleteDeck(title)
         this.props.navigation.navigate("Decks")
     }
@@ -21,6 +22,7 @@ class DeckView extends Component {
 
 
     render() {
+        console.log 
         return (
             <View style={styles.container}>
                 <Text>Add New Deck</Text>

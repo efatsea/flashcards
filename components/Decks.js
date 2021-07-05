@@ -12,10 +12,6 @@ class Decks extends Component {
         decksName: null
     }
 
-    onPress = () => {
-        this.props.navigation.navigate("DeckView")
-    }
-
     componentDidMount () {
         
         if (this.state.object === null) {
@@ -64,9 +60,20 @@ class Decks extends Component {
                 {decksName !== null 
                     ? decksName.map((item) => {
                         return (
-                            <TouchableOpacity key={item.length+item} onPress ={ this.onPress.bind()}  style={styles.decksButton}>
+                            <TouchableOpacity 
+                                key={item.length+item} 
+                                onPress ={(event)=> {
+                                    event.persist()
+                                    const { decks } = this.state
+                                    this.props.navigation.navigate("DeckView", {
+                                        title: item,
+                                        decks: decks
+                                    })
+                                }}  
+                                style={styles.decksButton}
+                            >
                                 <Text key={item}>{item}</Text>
-                                <Text key={item.length+item}>{decks[item].questions.length} cards</Text>
+                                <Text key={item.length + item}>{decks[item].questions ? decks[item].questions.length : null} cards</Text>
                             </TouchableOpacity>
                             
                         )

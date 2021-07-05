@@ -37,13 +37,15 @@ export function setData (data) {
     })
 }
 
-export const deleteDeck = async(data) => {
-    try {
-        await AsyncStorage.removeItem(data)
-    }
-    catch( error) {
-        console.log("error is", + error)
-    }
+export const deleteDeck = (key) => {
+    
+    return AsyncStorage.getItem(DECKS_STORAGE_KEY)
+        .then((results) => {
+            const data = JSON.parse(results)
+            data[key] = undefined
+            delete data[key]
+            AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(data))
+        })
 }
 
 export function submitDeck (data) {
