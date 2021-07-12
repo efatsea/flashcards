@@ -31,6 +31,7 @@ class Add extends Component {
                     placeholder = "Title"
                     onChangeText = {text => this.setText(text)}
                     defaultValue={title}
+                    style = {styles.text}
                 />
                 <TouchableOpacity onPress={this.onClick.bind()}>
                     <Text>Add Deck</Text>
@@ -64,7 +65,11 @@ const styles = StyleSheet.create({
 
     },
     text: {
-        backgroundColor: red,
+        backgroundColor: grey,
+        padding: 20,
+        paddingLeft: 50,
+        paddingRight: 50
+
     }
 
 })

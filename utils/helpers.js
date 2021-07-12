@@ -37,6 +37,28 @@ export function setData (data) {
     })
 }
 
+export function submitCard(deck, ques, ans) {
+    console.log("1")
+    return AsyncStorage.getItem(DECKS_STORAGE_KEY)
+    .then((results)=> {
+        console.log("1.5")
+        const data = JSON.parse(results)
+        const decki = data[deck]
+        let questions = decki.questions
+        console.log("2")
+        console.log(questions)
+        questions.push({question: ques, answer: ans})
+        const updated  = {[deck]: decki}
+        console.log("3")
+        AsyncStorage.mergeItem(DECKS_STORAGE_KEY, JSON.stringify(
+            updated
+        ))
+            .then(()=> console.log("Sucess"))
+            .catch((err)=> console.log("Error is", + err))
+    })
+    .catch((err) => console.log("Error is ", + err))
+}
+
 export const deleteDeck = (key) => {
     
     return AsyncStorage.getItem(DECKS_STORAGE_KEY)
@@ -56,6 +78,8 @@ export function submitDeck (data) {
         }
     }))
 }
+
+
 
 export const fetchDecks = async() => {
     try {

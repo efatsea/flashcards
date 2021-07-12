@@ -5,13 +5,22 @@ import { fetchDecks, setData, initData } from "../utils/helpers"
 
 
 
+
+
 class Decks extends Component {
     
     state = {
         decks: null,
         decksName: null
     }
-
+    
+    refresh = () => {
+        fetchDecks()
+            .then((obj) => {
+                this.setState({ decks: obj })
+                this.setState({ decksName: Object.keys(obj) })
+            })
+    }
     componentDidMount () {
         
         if (this.state.object === null) {
@@ -31,6 +40,7 @@ class Decks extends Component {
                         this.setState({ decksName: Object.keys(obj) })
                 })
         }
+        
         this._unsubscribe = this.props.navigation.addListener("tabPress", () => {
             fetchDecks()
                 .then((obj) => {
@@ -45,6 +55,13 @@ class Decks extends Component {
                     this.setState({ decksName: Object.keys(obj) })
                 })
         })
+        this._unsubscribe = this.props.navigation.addListener("didFocus", () => {
+            fetchDecks()
+                .then((obj) => {
+                    this.setState({ decks: obj })
+                    this.setState({ decksName: Object.keys(obj) })
+                })
+        })
     }
 
     componentWillUnmount(){
@@ -52,6 +69,7 @@ class Decks extends Component {
     }
 
     render(){
+        
         const { decksName, decks } = this.state
         console.log(decksName)
         return(
@@ -63,7 +81,6 @@ class Decks extends Component {
                             <TouchableOpacity 
                                 key={item.length+item} 
                                 onPress ={(event)=> {
-                                    event.persist()
                                     const { decks } = this.state
                                     this.props.navigation.navigate("DeckView", {
                                         title: item,
@@ -73,7 +90,7 @@ class Decks extends Component {
                                 style={styles.decksButton}
                             >
                                 <Text key={item}>{item}</Text>
-                                <Text key={item.length + item}>{decks[item].questions ? decks[item].questions.length : null} cards</Text>
+                                <Text key={item.length + item}>{decks[item] ? decks[item].questions.length : null} cards</Text>
                             </TouchableOpacity>
                             
                         )
@@ -113,5 +130,7 @@ const styles = StyleSheet.create({
     }
 
 })
+
+
 
 export default Decks

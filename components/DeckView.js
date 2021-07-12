@@ -2,6 +2,7 @@ import React, { Component } from "react"
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from "react-native"
 import { background, grey, red } from "../utils/colors"
 import { deleteDeck } from "../utils/helpers"
+import AddCard from "./AddCard"
 
 class DeckView extends Component {
     
@@ -9,7 +10,9 @@ class DeckView extends Component {
         const { title, decks } = this.props.route.params
         console.log(title)
         deleteDeck(title)
-        this.props.navigation.navigate("Decks")
+        this.props.navigation.navigate("Home", {
+            onGoBack: () => this.refresh()
+        })
     }
 
     onQuiz = () => {
@@ -22,19 +25,33 @@ class DeckView extends Component {
 
 
     render() {
-        console.log 
+        const { title, decks } = this.props.route.params
         return (
             <View style={styles.container}>
                 <Text>Add New Deck</Text>
-                <Text>What is the title of the new Deck?</Text>
+                {decks[title].questions.map((ques)=>{
+                    return (
+                        <View key={ques.question}>
+                            <Text key={ques.question}>{ques.question}</Text>
+                            <Text key={ques.answer}>{ques.answer}</Text>
+                        </View>
+                    )
+                })}
                 
-                <TouchableOpacity onPress={this.onDelete.bind()}>
+                <TouchableOpacity 
+                    style={styles.decksButton}
+                    onPress={(event) => {
+                        this.props.navigation.navigate("AddCard", {
+                            title: title,
+                        })
+                    }}
+                >
                     <Text>Add Card</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={this.onDelete.bind()}>
+                <TouchableOpacity style={styles.decksButton} onPress={this.onDelete.bind()}>
                     <Text>Start Quiz</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={this.onDelete.bind()}>
+                <TouchableOpacity style={styles.decksButton} onPress={this.onDelete.bind()}>
                     <Text>Delete Deck</Text>
                 </TouchableOpacity>
 
@@ -67,6 +84,7 @@ const styles = StyleSheet.create({
     },
     text: {
         backgroundColor: red,
+        padding : 10,
     }
 
 })
