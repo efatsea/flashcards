@@ -48,7 +48,15 @@ class DeckView extends Component {
                 >
                     <Text>Add Card</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.decksButton} onPress={this.onDelete.bind()}>
+                <TouchableOpacity
+                    style={styles.decksButton}
+                    onPress={(event) => {
+                        this.props.navigation.navigate("Quiz", {
+                            title: title,
+                            decks: decks
+                        })
+                    }}
+                >
                     <Text>Start Quiz</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.decksButton} onPress={this.onDelete.bind()}>

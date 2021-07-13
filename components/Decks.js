@@ -69,7 +69,6 @@ class Decks extends Component {
     }
 
     render(){
-        
         const { decksName, decks } = this.state
         console.log(decksName)
         return(

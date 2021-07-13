@@ -10,6 +10,7 @@ import Decks from "./components/Decks"
 import DeckView from "./components/DeckView"
 import Add from "./components/Add"
 import AddCard from "./components/AddCard"
+import Quiz from "./components/Quiz"
 
 import { StackRouter } from 'react-navigation';
 
@@ -61,6 +62,7 @@ export default function App() {
         <Stack.Screen name = "Home" component = {MyTabs} />
         <Stack.Screen name = "DeckView" component = {DeckView} />
         <Stack.Screen name="AddCard" component={AddCard} />
+        <Stack.Screen name="Quiz" component={Quiz} />
       </Stack.Navigator>
     </NavigationContainer>
   );
