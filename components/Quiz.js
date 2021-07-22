@@ -18,33 +18,32 @@ class Quiz extends Component {
     onCorrect = () => {
         this.setState(preState => {
             return {
-                correct: preState.correct+1}
+                correct: preState.correct+1,
+                cardNum: preState.cardNum + 1,
+                show: false
+            }
         })
     }
 
     onWrong = () => {
         this.setState(preState => {
             return {
-                wrong: preState.wrong+1}
-        })
-    }
-
-    onNext = () => {
-        const { title, decks } = this.props.route.params
-        const totalCards = decks[title].questions.length
-        this.setState(preState => {
-            return {
-                cardNum: preState.cardNum + 1
+                wrong: preState.wrong+1,
+                cardNum: preState.cardNum + 1,
+                show: false
             }
         })
     }
+    onRestart = () => {
+        this.setState({ show: false, cardNum:0, correct:0, wrong:0 })
+    }
+    
 
     render() {
         const { title, decks } = this.props.route.params
         const { show, correct, wrong, cardNum } = this.state
         const totalCards = decks[title].questions.length
         const currDeck = decks[title].questions
-        console.log(this.state)
         return (
             <View style={styles.container}>
                { currDeck[cardNum] 
@@ -64,11 +63,28 @@ class Quiz extends Component {
                         <TouchableOpacity style={styles.decksButton} onPress={this.onWrong.bind()} >
                             <Text>Wrong</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.decksButton} onPress={this.onNext.bind()} >
-                            <Text>Next Question</Text>
-                        </TouchableOpacity>
+                        <Text>({cardNum+1}/{totalCards})</Text>
                     </View>
-                : <Text>Finish</Text>
+                : <View>
+                        <Text>Finish</Text>
+                        <Text>Correct Answers: {correct}/{totalCards}</Text>
+                        <TouchableOpacity style={styles.decksButton}
+                            onPress={this.onRestart.bind()}
+                        >
+                            <Text>Restart Quiz</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.decksButton} 
+                            onPress={(event) => {
+                                this.props.navigation.navigate("DeckView", {
+                                    title: title,
+                                    decks: decks
+                                })
+                            }}
+                        >
+                            <Text>Back to Deck</Text>
+                        </TouchableOpacity>
+
+                </View>
                 }
             
                     

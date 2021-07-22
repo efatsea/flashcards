@@ -80,7 +80,7 @@ class Decks extends Component {
                             <TouchableOpacity 
                                 key={item.length+item} 
                                 onPress ={(event)=> {
-                                    const { decks } = this.state
+                                    
                                     this.props.navigation.navigate("DeckView", {
                                         title: item,
                                         decks: decks
