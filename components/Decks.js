@@ -72,30 +72,33 @@ class Decks extends Component {
         const { decksName, decks } = this.state
         console.log(decksName)
         return(
-            <ScrollView >
-                <Text>Decks</Text>
-                {decksName !== null 
-                    ? decksName.map((item) => {
-                        return (
-                            <TouchableOpacity 
-                                key={item.length+item} 
-                                onPress ={(event)=> {
-                                    
-                                    this.props.navigation.navigate("DeckView", {
-                                        title: item,
-                                        decks: decks
-                                    })
-                                }}  
-                                style={styles.decksButton}
-                            >
-                                <Text key={item}>{item}</Text>
-                                <Text key={item.length + item}>{decks[item] ? decks[item].questions.length : null} cards</Text>
-                            </TouchableOpacity>
-                            
-                        )
-                    })
-                    :  <Text>Wait...</Text>
-                }
+            <ScrollView>
+                <View style={styles.container}>
+                    <Text style={styles.title}>My Decks</Text>
+                    {decksName !== null
+                        ? decksName.map((item) => {
+                            return (
+                                <TouchableOpacity
+                                    key={item.length + item}
+                                    onPress={(event) => {
+
+                                        this.props.navigation.navigate("DeckView", {
+                                            title: item,
+                                            decks: decks
+                                        })
+                                    }}
+                                    style={styles.button}
+                                >
+                                    <Text key={item}>{item}</Text>
+                                    <Text key={item.length + item}>{decks[item] ? decks[item].questions.length : null} cards</Text>
+                                </TouchableOpacity>
+
+                            )
+                        })
+                        : <Text>Wait...</Text>
+                    }
+                </View>
+                
                 
             </ScrollView>
         )
@@ -108,9 +111,10 @@ const styles = StyleSheet.create({
         padding: 20,
         backgroundColor: background,
         alignItems: "center",
-        marginTop: 30,
+        paddingBottom: 300,
+        
     },
-    decksButton: {
+    button: {
         alignItems: "center",
         justifyContent: "center",
         paddingTop: 40,
@@ -126,7 +130,14 @@ const styles = StyleSheet.create({
     },
     text: {
         backgroundColor: red,
+    },
+    title: {
+        flex: 1,
+        fontSize: 20,
+        alignItems: "center",
+        justifyContent: "center",
     }
+
 
 })
 

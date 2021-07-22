@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from "react-native"
-import { background, grey, red } from "../utils/colors"
+import { background, blue, green, grey, red, white } from "../utils/colors"
 import { deleteDeck } from "../utils/helpers"
 import AddCard from "./AddCard"
 
@@ -10,46 +10,27 @@ class DeckView extends Component {
         const { title, decks } = this.props.route.params
         console.log(title)
         deleteDeck(title)
-        this.props.navigation.navigate("Home", {
-            onGoBack: () => this.refresh()
-        })
+        this.props.navigation.navigate("Home")
     }
-
-    onQuiz = () => {
-
-    }
-
-    onAddCard = () => {
-
-    }
-
 
     render() {
         const { title, decks } = this.props.route.params
         return (
             <View style={styles.container}>
-                <Text>Add New Deck</Text>
-                {decks[title].questions.map((ques)=>{
-                    return (
-                        <View key={ques.question}>
-                            <Text key={ques.question}>{ques.question}</Text>
-                            <Text key={ques.answer}>{ques.answer}</Text>
-                        </View>
-                    )
-                })}
-                
+                <Text style={styles.title}>{title}</Text> 
                 <TouchableOpacity 
-                    style={styles.decksButton}
+                    style={[styles.button, { backgroundColor: green }]}
                     onPress={(event) => {
                         this.props.navigation.navigate("AddCard", {
                             title: title,
+                            decks: decks
                         })
                     }}
                 >
-                    <Text>Add Card</Text>
+                    <Text style={styles.text}>Add Card</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    style={styles.decksButton}
+                    style={styles.button}
                     onPress={(event) => {
                         this.props.navigation.navigate("Quiz", {
                             title: title,
@@ -57,10 +38,10 @@ class DeckView extends Component {
                         })
                     }}
                 >
-                    <Text>Start Quiz</Text>
+                    <Text style={styles.text}>Start Quiz</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.decksButton} onPress={this.onDelete.bind()}>
-                    <Text>Delete Deck</Text>
+                <TouchableOpacity style={[styles.button, { backgroundColor: red }]} onPress={this.onDelete.bind()}>
+                    <Text style={styles.text}>Delete Deck</Text>
                 </TouchableOpacity>
 
             </View>
@@ -74,9 +55,10 @@ const styles = StyleSheet.create({
         padding: 20,
         backgroundColor: background,
         alignItems: "center",
-        marginTop: 30,
+        paddingBottom: 300,
+
     },
-    decksButton: {
+    button: {
         alignItems: "center",
         justifyContent: "center",
         paddingTop: 40,
@@ -91,9 +73,16 @@ const styles = StyleSheet.create({
 
     },
     text: {
-        backgroundColor: red,
-        padding : 10,
+        fontSize:15,
+        fontWeight: "bold"
+    },
+    title: {
+        flex: 1,
+        fontSize: 20,
+        alignItems: "center",
+        justifyContent: "center",
     }
+
 
 })
 

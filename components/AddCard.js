@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from "react-native"
-import { background, grey, red } from "../utils/colors"
+import { background, black, green, grey, red } from "../utils/colors"
 import { submitCard } from "../utils/helpers"
 
 class AddCard extends Component {
@@ -19,12 +19,15 @@ class AddCard extends Component {
 
     onClick = ({ navigation }) => {
         const { question, answer } = this.state
-        const { title} =this.props.route.params
+        const { title, decks} =this.props.route.params
         console.log(title)
         submitCard(title, question, answer)
         this.setState({ question: " " })
         this.setState({ answer: " " })
-        this.props.navigation.navigate("Decks")
+        this.props.navigation.navigate("DeckView", {
+            title: title,
+            decks: decks
+        })
     }
 
 
@@ -34,22 +37,22 @@ class AddCard extends Component {
         console.log(title)
         return (
             <View style={styles.container}>
-                <Text>Add New Card</Text>
+                <Text style={styles.title}>Add New Card</Text>
                
                 <TextInput
                     placeholder="Question"
                     onChangeText={text => this.setTextQuestion(text)}
                     defaultValue={question}
-                    style={styles.text}
+                    style={styles.input}
                 />
                 <TextInput
                     placeholder="Answer"
                     onChangeText={text => this.setTextAnswer(text)}
                     defaultValue={answer}
-                    style={styles.text}
+                    style={styles.input}
                 />
-                <TouchableOpacity onPress={this.onClick.bind()}>
-                    <Text>Add Card</Text>
+                <TouchableOpacity style={[styles.button, { backgroundColor: green }]} onPress={this.onClick.bind()}>
+                    <Text style>Add Card</Text>
                 </TouchableOpacity>
 
             </View>
@@ -63,9 +66,10 @@ const styles = StyleSheet.create({
         padding: 20,
         backgroundColor: background,
         alignItems: "center",
-        marginTop: 30,
+        paddingBottom: 300,
+
     },
-    decksButton: {
+    button: {
         alignItems: "center",
         justifyContent: "center",
         paddingTop: 40,
@@ -77,16 +81,34 @@ const styles = StyleSheet.create({
         marginTop: 20,
         backgroundColor: grey,
         height: 45,
+        
 
     },
     text: {
-        backgroundColor: grey,
-        padding: 20,
-        paddingLeft: 50,
-        paddingRight: 50
-
+        fontSize: 15,
+        fontWeight: "bold"
+    },
+    title: {
+        flex: 1,
+        fontSize: 20,
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    input:{
+        paddingTop: 40,
+        paddingBottom: 40,
+        paddingLeft: 100,
+        paddingRight: 100,
+        marginLeft: 40,
+        marginRight: 40,
+        marginTop: 20,
+        color: black,
+        borderColor: grey,
+        borderWidth: 1,
     }
 
+
 })
+
 
 export default AddCard
