@@ -1,6 +1,7 @@
 import React, { Component } from "react"
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from "react-native"
 import { background, grey, red } from "../utils/colors"
+import { clearLocalNotification, setLocalNotification } from "../utils/helpers"
 
 class Quiz extends Component {
     state = {
@@ -44,6 +45,12 @@ class Quiz extends Component {
         const { show, correct, wrong, cardNum } = this.state
         const totalCards = decks[title].questions.length
         const currDeck = decks[title].questions
+
+        if(currDeck >= totalCards) {
+            clearLocalNotification()
+                .then(setLocalNotification)
+        }
+
         return (
             <View style={styles.container}>
                { currDeck[cardNum] 

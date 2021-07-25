@@ -1,5 +1,8 @@
 import  { AsyncStorage }  from "react-native"
+import { Notifications } from "expo"
+import * as Permissions from 'expo-permissions'
 
+const NOTIFICATION_KEY = "Flashcards:notifications"
 const DECKS_STORAGE_KEY = "save-decks"
 export let initData = {
     React: {
@@ -92,4 +95,53 @@ export const fetchDecks = async() => {
     } catch (error) {
         console.log("error is ", + error)
     }
+}
+
+export function clearLocalNotification() {
+    return AsyncStorage.removeItem(NOTIFICATION_KEY)
+        .then(Notifications.cancelAllScheduledNotificationsAsync())
+}
+
+function createNotification() {
+    return {
+        title: "Let's start a new quiz! ",
+        body:"Hi! Don't stop your practise... Start a new quiz now!",
+        ios: {
+            sound: true
+        },
+        android: {
+            sound: true,
+            priority: "high",
+            sticky: false,
+            vibrate: true
+        }
+    }
+}
+
+export function setLocalNotification() {
+    AsyncStorage.getItem(NOTIFICATION_KEY)
+        .then(JSON.parse)
+        .then((data) => {
+            if (data === null) {
+                Permissions.askAsync(Permissions.NOTIFICATIONS)
+                    .then(({status}) => {
+                        if (status === "granted") {
+                            Notifications.cancelAllScheduledNotificationsAsync()
+                            let tommorow = new Date()
+                            tommorow.setDate(tommorow.getDate()+1)
+                            tommorow.setHours(20)
+                            tommorow.setMinutes(0)
+                            Notifications.scheduleLocalNotificationAsync(
+                                createNotification(),
+                                {
+                                    time: tommorow,
+                                    replay: "day"
+                                }
+                            )
+
+                            AsyncStorage.setItem(NOTIFICATION_KEY, JSON.stringify(true) )
+                        }
+                    })
+            }
+        })
 }
