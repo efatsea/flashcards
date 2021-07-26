@@ -46,7 +46,7 @@ class Quiz extends Component {
         const totalCards = decks[title].questions.length
         const currDeck = decks[title].questions
 
-        if(currDeck >= totalCards) {
+        if(currDeck >= totalCards && totalCards!==0) {
             clearLocalNotification()
                 .then(setLocalNotification)
         }
@@ -75,23 +75,31 @@ class Quiz extends Component {
                         <Text>({cardNum+1}/{totalCards})</Text>
                     </View>
                 : <View>
-                        <Text>Finish</Text>
-                        <Text>Correct Answers: {correct}/{totalCards}</Text>
-                        <TouchableOpacity style={styles.decksButton}
-                            onPress={this.onRestart.bind()}
-                        >
-                            <Text>Restart Quiz</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.decksButton} 
-                            onPress={(event) => {
-                                this.props.navigation.navigate("DeckView", {
-                                    title: title,
-                                    decks: decks
-                                })
-                            }}
-                        >
-                            <Text>Back to Deck</Text>
-                        </TouchableOpacity>
+                        
+                        {totalCards === 0
+                            ?<Text>Sorry no cards get!</Text>
+                            :
+                            <View>
+                                <Text>Finish</Text>
+                                <Text>Correct Answers: {correct}/{totalCards}</Text>
+                                <TouchableOpacity style={styles.decksButton}
+                                    onPress={this.onRestart.bind()}
+                                >
+                                    <Text>Restart Quiz</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.decksButton}
+                                    onPress={(event) => {
+                                        this.props.navigation.navigate("DeckView", {
+                                            title: title,
+                                            decks: decks
+                                        })
+                                    }}
+                                >
+                                    <Text>Back to Deck</Text>
+                                </TouchableOpacity>
+                            </View>
+                            
+                      }  
 
                 </View>
                 }
