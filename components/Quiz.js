@@ -56,6 +56,7 @@ class Quiz extends Component {
                { currDeck[cardNum] 
                 ?   <View>
                         <Text>{currDeck[cardNum].question}</Text>
+                        <Text>Answer:</Text>
                         {show === true
                             ? null
                             : <TouchableOpacity style={styles.decksButton} onPress={this.onShow.bind()}>
@@ -63,6 +64,7 @@ class Quiz extends Component {
                             </TouchableOpacity>
 
                         }
+                        
                         {show === true ? <Text>{currDeck[cardNum].answer}</Text> : null}
                         <TouchableOpacity style={styles.decksButton} onPress={this.onCorrect.bind()}>
                             <Text>Correct</Text>

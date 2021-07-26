@@ -1,11 +1,12 @@
 import React, { Component } from "react"
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from "react-native"
 import { background, black, green, grey, red, white } from "../utils/colors"
-import { submitDeck } from "../utils/helpers"
+import { fetchDecks, submitDeck } from "../utils/helpers"
 
 class Add extends Component {
     state = {
-        title: ""
+        title: "",
+        decks: null
     }
 
     setText = (text) => {
@@ -13,11 +14,22 @@ class Add extends Component {
     }
 
     onClick = ({navigation}) => {
-        const { title } = this.state
+        const { title, decks } = this.state
         console.log(title)
         submitDeck(title)
+            .then(()=>{
+                fetchDecks()
+                    .then((obj) => {
+                        this.setState({ decks: obj })
+                    })
+            })
+            .then(()=>{
+                this.props.navigation.navigate("DeckView", {
+                    title: title,
+                    decks: decks
+                })
+            })
         this.setState({ title: " " })
-        this.props.navigation.navigate("Decks") 
     }
 
 
