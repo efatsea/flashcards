@@ -1,12 +1,13 @@
 import React, { Component } from "react"
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from "react-native"
 import { background, black, green, grey, red } from "../utils/colors"
-import { submitCard } from "../utils/helpers"
+import { fetchDecks, submitCard } from "../utils/helpers"
 
 class AddCard extends Component {
     state = {
         question: "",
-        answer: ""
+        answer: "",
+        decks:null
     }
 
     setTextQuestion = (text) => {
@@ -19,15 +20,25 @@ class AddCard extends Component {
 
     onClick = ({ navigation }) => {
         const { question, answer } = this.state
-        const { title, decks} =this.props.route.params
+        const { title} =this.props.route.params
+        const { decks } = this.state
         console.log(title)
         submitCard(title, question, answer)
-        this.setState({ question: " " })
-        this.setState({ answer: " " })
-        this.props.navigation.navigate("DeckView", {
-            title: title,
-            decks: decks
-        })
+            .then(()=>{
+                fetchDecks()
+                    .then((obj) => {
+                        this.setState({ decks: obj })
+                        this.setState({ question: " " })
+                        this.setState({ answer: " " })
+                    })
+                    .then(()=>{
+                        this.props.navigation.navigate("DeckView", {
+                            title: title,
+                            decks: decks,
+                        })
+                    })
+            })
+       
     }
 
 

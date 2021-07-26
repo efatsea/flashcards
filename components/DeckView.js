@@ -1,23 +1,59 @@
 import React, { Component } from "react"
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from "react-native"
 import { background, blue, green, grey, red, white } from "../utils/colors"
-import { deleteDeck } from "../utils/helpers"
+import { deleteDeck, fetchDecks } from "../utils/helpers"
 import AddCard from "./AddCard"
 
 class DeckView extends Component {
+
+    state = {
+        decks: null
+        
+    }
+
+    componentDidMount () {
+        fetchDecks()
+            .then((obj) => {
+                this.setState({ decks: obj })
+            })
+
+            
+        this._unsubscribe = this.props.navigation.addListener("state", () => {
+            fetchDecks()
+                .then((obj) => {
+                    this.setState({ decks: obj })
+                    
+                })
+        })
+    }
+
+    componentWillUnmount() {
+        this._unsubscribe()
+    }
+
     
     onDelete = ({  route, navigation }) => {
-        const { title, decks } = this.props.route.params
+        const { title } = this.props.route.params
+        const { decks } = this.state
         console.log(title)
         deleteDeck(title)
-        this.props.navigation.navigate("Home")
+            .then(()=>{
+                this.props.navigation.navigate("Home")
+            })
+       
     }
 
     render() {
-        const { title, decks } = this.props.route.params
+        const { title } = this.props.route.params
+        const { decks } = this.state
+        console.log(title)
+        
         return (
+            
+            decks !== null  ?
             <View style={styles.container}>
                 <Text style={styles.title}>{title}</Text> 
+                <Text style={styles.title}>{decks[title] ? decks[title].questions.length : null} cards</Text>
                 <TouchableOpacity 
                     style={[styles.button, { backgroundColor: green }]}
                     onPress={(event) => {
@@ -45,6 +81,7 @@ class DeckView extends Component {
                 </TouchableOpacity>
 
             </View>
+            :null
         )
     }
 }
