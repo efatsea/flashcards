@@ -1,5 +1,5 @@
 import  { AsyncStorage }  from "react-native"
-import { Notifications } from "expo"
+import * as Notifications from "expo-notifications"
 import * as Permissions from 'expo-permissions'
 
 const NOTIFICATION_KEY = "Flashcards:notifications"
@@ -117,13 +117,13 @@ function createNotification() {
         }
     }
 }
-
+//code update for the notification gotten by  https://github.com/notthattayo/udacity_flashcards/blob/master/utils/helpers.js
 export function setLocalNotification() {
     AsyncStorage.getItem(NOTIFICATION_KEY)
         .then(JSON.parse)
         .then((data) => {
             if (data === null) {
-                Permissions.askAsync(Permissions.NOTIFICATIONS)
+                Notifications.requestPermissionsAsync()
                     .then(({status}) => {
                         if (status === "granted") {
                             Notifications.cancelAllScheduledNotificationsAsync()
@@ -131,13 +131,14 @@ export function setLocalNotification() {
                             tommorow.setDate(tommorow.getDate()+1)
                             tommorow.setHours(20)
                             tommorow.setMinutes(0)
-                            Notifications.scheduleLocalNotificationAsync(
-                                createNotification(),
-                                {
+                            Notifications.scheduleNotificationAsync({
+                                content: createNotification(),
+                                trigger: {
                                     time: tommorow,
                                     replay: "day"
                                 }
-                            )
+                                
+                            })
 
                             AsyncStorage.setItem(NOTIFICATION_KEY, JSON.stringify(true) )
                         }
