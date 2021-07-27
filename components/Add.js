@@ -44,7 +44,6 @@ class Add extends Component {
                     onChangeText = {text => this.setText(text)}
                     defaultValue={title}
                     style = {styles.input}
-                    inputStyle={{ color: black }}
                 />
                 <TouchableOpacity style={[styles.button, { backgroundColor: green }]} onPress={this.onClick.bind()}>
                     <Text>Add Deck</Text>
@@ -90,17 +89,14 @@ const styles = StyleSheet.create({
         justifyContent: "center",
     },
     input: {
-        paddingTop: 40,
-        paddingBottom: 40,
-        paddingLeft: 100,
-        paddingRight: 100,
-        marginLeft: 40,
-        marginRight: 40,
-        marginTop: 20,
+        marginVertical: 20,
+        width: 200,
+        height:70,
         borderColor: grey,
         borderWidth: 1,
-        backgroundColor:white,
-        color:black
+        color:black,
+        textAlign: "center",
+        overflow: "scroll"
     }
 
 

@@ -46,7 +46,6 @@ class DeckView extends Component {
     render() {
         const { title } = this.props.route.params
         const { decks } = this.state
-        console.log(title)
         
         return (
             

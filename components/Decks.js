@@ -14,13 +14,6 @@ class Decks extends Component {
         decksName: null
     }
     
-    refresh = () => {
-        fetchDecks()
-            .then((obj) => {
-                this.setState({ decks: obj })
-                this.setState({ decksName: Object.keys(obj) })
-            })
-    }
     componentDidMount () {
         
         if (this.state.object === null) {
@@ -70,7 +63,6 @@ class Decks extends Component {
 
     render(){
         const { decksName, decks } = this.state
-        console.log(decksName)
         return(
             <ScrollView>
                 <View style={styles.container}>

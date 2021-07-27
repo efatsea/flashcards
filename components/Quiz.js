@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from "react-native"
-import { background, grey, red } from "../utils/colors"
+import { background, blue, green, grey, red } from "../utils/colors"
 import { clearLocalNotification, setLocalNotification } from "../utils/helpers"
 
 class Quiz extends Component {
@@ -54,40 +54,47 @@ class Quiz extends Component {
         return (
             <View style={styles.container}>
                { currDeck[cardNum] 
-                ?   <View>
-                        <Text>{currDeck[cardNum].question}</Text>
-                        <Text>Answer:</Text>
+                    ? <View style={styles.container2}>
+                        <Text style={styles.title}>{currDeck[cardNum].question}</Text>
+                        <Text style={styles.text}>Answer:</Text>
                         {show === true
                             ? null
-                            : <TouchableOpacity style={styles.decksButton} onPress={this.onShow.bind()}>
+                            : <TouchableOpacity style={[styles.button, { backgroundColor: grey }]} onPress={this.onShow.bind()}>
                                 <Text>Show Answer</Text>
                             </TouchableOpacity>
 
                         }
                         
-                        {show === true ? <Text>{currDeck[cardNum].answer}</Text> : null}
-                        <TouchableOpacity style={styles.decksButton} onPress={this.onCorrect.bind()}>
-                            <Text>Correct</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.decksButton} onPress={this.onWrong.bind()} >
-                            <Text>Wrong</Text>
-                        </TouchableOpacity>
-                        <Text>({cardNum+1}/{totalCards})</Text>
+                        {show === true ? <Text style={styles.text}>{currDeck[cardNum].answer}</Text> : null}
+                        <View style={styles.btnContainer}>
+                            <TouchableOpacity style={[styles.button, {
+                                backgroundColor: green, paddingTop: 25,
+                                paddingBottom: 25, }]} onPress={this.onCorrect.bind()}>
+                                <Text>Correct</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={[styles.button, {
+                                backgroundColor: red, paddingTop: 25,
+                                paddingBottom: 25 }]} onPress={this.onWrong.bind()} >
+                                <Text>Wrong</Text>
+                            </TouchableOpacity>
+                        </View>
+                       
+                        <Text style={[styles.text,{marginTop:10}]}>({cardNum+1}/{totalCards})</Text>
                     </View>
                 : <View>
                         
                         {totalCards === 0
-                            ?<Text>Sorry no cards get!</Text>
+                            ? <Text style={styles.text}>Sorry no cards get!</Text>
                             :
-                            <View>
-                                <Text>Finish</Text>
-                                <Text>Correct Answers: {correct}/{totalCards}</Text>
-                                <TouchableOpacity style={styles.decksButton}
+                            <View style={styles.container2}>
+                                <Text style={styles.title}>Finished!</Text>
+                                <Text style={styles.title}>Correct Answers: {correct}/{totalCards}</Text>
+                                <TouchableOpacity style={[styles.button, { backgroundColor: grey }]}
                                     onPress={this.onRestart.bind()}
                                 >
                                     <Text>Restart Quiz</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity style={styles.decksButton}
+                                <TouchableOpacity style={[styles.button, { backgroundColor: blue }]}
                                     onPress={(event) => {
                                         this.props.navigation.navigate("DeckView", {
                                             title: title,
@@ -117,9 +124,20 @@ const styles = StyleSheet.create({
         padding: 20,
         backgroundColor: background,
         alignItems: "center",
-        marginTop: 30,
+        paddingBottom: 300,
+
     },
-    decksButton: {
+    container2: {
+        flex: 1,
+        alignItems: "center",
+
+    },
+    btnContainer:{
+        flex: 1,
+        flexDirection: "row",
+        alignContent: "space-around"
+    },
+    button: {
         alignItems: "center",
         justifyContent: "center",
         paddingTop: 40,
@@ -128,15 +146,22 @@ const styles = StyleSheet.create({
         paddingRight: 50,
         marginLeft: 40,
         marginRight: 40,
-        marginTop: 20,
+        marginTop: 30,
         backgroundColor: grey,
         height: 45,
 
     },
     text: {
-        backgroundColor: red,
-        padding: 10,
+        fontSize: 15,
+        fontWeight: "bold"
+    },
+    title: {
+        flex: 1,
+        fontSize: 20,
+        alignItems: "center",
+        justifyContent: "center",
     }
+
 
 })
 

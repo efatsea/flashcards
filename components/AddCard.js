@@ -105,17 +105,15 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
     },
-    input:{
-        paddingTop: 40,
-        paddingBottom: 40,
-        paddingLeft: 100,
-        paddingRight: 100,
-        marginLeft: 40,
-        marginRight: 40,
-        marginTop: 20,
-        color: black,
+    input: {
+        marginVertical: 20,
+        width: 200,
+        height: 70,
         borderColor: grey,
         borderWidth: 1,
+        color: black,
+        textAlign: "center",
+        overflow: "scroll"
     }
 
 
